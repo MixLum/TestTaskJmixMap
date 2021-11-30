@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        xmlns:maps="http://jmix.io/schema/maps/ui"
+        caption="msg://pointBrowse.caption"
+        focusComponent="pointsTable">
+    <data readOnly="true">
+        <collection id="pointsDc"
+                    class="com.company.testtaskjmixmap.entity.Point">
+            <fetchPlan extends="_base"/>
+            <loader id="pointsDl">
+                <query>
+                    <![CDATA[select e from Point e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="lookupSelectAction"
+                caption="msg:///actions.Select"
+                icon="LOOKUP_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="lookupCancelAction"
+                caption="msg:///actions.Cancel"
+                icon="LOOKUP_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="mainForm" spacing="true">
+        <hbox id="mainForm" expand="map" align="TOP_CENTER" width="100%" spacing="true">
+            <maps:geoMap id="map"
+                         centerX="30.529477"
+                         centerY="50.446218"
+                         zoom="10" height="100%">
+                <maps:layers>
+                    <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
+                    <maps:vector id="pointsLayer" dataContainer="pointsDc"/>
+                </maps:layers>
+            </maps:geoMap>
+            <groupTable id="pointsTable"
+
+                        width="500px"
+                        dataContainer="pointsDc"
+                        multiselect="true" height="100%">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="refresh" type="refresh"/>
+                    <action id="remove" type="remove"/>
+                </actions>
+                <columns>
+                    <column id="code" width="50" caption="&#1050;&#1086;&#1076;" align="CENTER"/>
+                    <column id="address" caption="&#1040;&#1076;&#1088;&#1077;&#1089;"/>
+                    <column id="latitude" caption="&#1064;&#1080;&#1088;&#1086;&#1090;&#1072;" width="80"
+                            align="CENTER"/>
+                    <column id="longitude" caption="&#1044;&#1086;&#1083;&#1075;&#1086;&#1090;&#1072;" width="80"
+                            align="CENTER"/>
+                    <column id="icon" width="75" caption="&#1048;&#1082;&#1086;&#1085;&#1082;&#1072;" align="CENTER"/>
+                </columns>
+                <simplePagination/>
+                <buttonsPanel id="buttonsPanel"
+                              alwaysVisible="true">
+                    <button id="addBtn" action="pointsTable.add"/>
+                    <button id="createBtn" action="pointsTable.create"/>
+                    <button id="editBtn" action="pointsTable.edit"/>
+                    <button id="refreshBtn" action="pointsTable.refresh"/>
+                    <button id="removeBtn" action="pointsTable.remove"/>
+                </buttonsPanel>
+            </groupTable>
+        </hbox>
+        <filter id="filter"
+                dataLoader="pointsDl" align="BOTTOM_RIGHT">
+            <properties include=".*"/>
+        </filter>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+
+    </layout>
+</window>

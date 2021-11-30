@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:maps="http://jmix.io/schema/maps/ui"
+        caption="msg://pointEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="pointDc"
+                  class="com.company.testtaskjmixmap.entity.Point">
+            <fetchPlan extends="_base"/>
+            <loader/>
+        </instance>
+        <instance id="pointsDc" class="com.company.testtaskjmixmap.entity.Point">
+            <fetchPlan extends="_base"/>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose"
+                caption="msg:///actions.SaveClose"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowCommit"
+                caption="msg:///actions.Save"
+                icon="SAVE"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+
+    <layout spacing="true" expand="mainForm">
+        <hbox id="mainForm" width="100%" expand="map">
+            <maps:geoMap id="map"
+                         height="100%"
+                         centerX="30.529477"
+                         centerY="50.446218"
+                         zoom="10" width="100%">
+                <maps:layers>
+                    <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
+                    <maps:vector id="pointsLayer" dataContainer="pointsDc" editable="true"/>
+
+                </maps:layers>
+            </maps:geoMap>
+            <vbox margin="true,true,false,false" width="500px" align="TOP_RIGHT" height="500px" spacing="true"
+            >
+                <form id="form" dataContainer="pointDc" align="TOP_RIGHT" width="100%">
+                    <column width="100%">
+                        <textField id="codeField" property="code"/>
+                        <textField id="addressField" property="address"/>
+                        <textField id="latitudeField" property="latitude"/>
+                        <textField id="longitudeField" property="longitude"/>
+                        <textField id="iconField" property="icon"/>
+                    </column>
+                </form>
+                <hbox id="editActions" spacing="true" width="100%">
+                    <button id="commitAndCloseBtn" action="windowCommitAndClose" caption="Save&amp;close"
+                    />
+                    <button id="commitBtn" action="windowCommit" caption="Save" align="TOP_CENTER"/>
+                    <button id="closeBtn" action="windowClose" caption="Cancel" align="TOP_RIGHT"/>
+                </hbox>
+            </vbox>
+        </hbox>
+    </layout>
+</window>
