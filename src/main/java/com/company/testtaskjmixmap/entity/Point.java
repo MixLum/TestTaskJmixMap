@@ -1,6 +1,7 @@
 package com.company.testtaskjmixmap.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.core.metamodel.annotation.JmixProperty;
 import io.jmix.core.metamodel.annotation.PropertyDatatype;
@@ -10,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.UUID;
@@ -17,7 +19,7 @@ import java.util.UUID;
 @JmixEntity
 @Table(name = "POINT")
 @Entity
-public class  Point{
+public class Point {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
@@ -29,6 +31,8 @@ public class  Point{
     @JmixProperty
     private org.locationtech.jts.geom.Point location;
 
+    @InstanceName
+    @Digits(integer = 8, fraction = 0)
     @NotNull
     @Column(name = "CODE", unique = true)
     private Integer code;
@@ -36,10 +40,12 @@ public class  Point{
     @Column(name = "ADDRESS")
     private String address;
 
+    @Digits(integer = 2, fraction = 9)
     @NotNull
     @Column(name = "LATITUDE")
     private Double latitude;
 
+    @Digits(integer = 2, fraction = 9)
     @NotNull
     @Column(name = "LONGITUDE")
     private Double longitude;
@@ -52,8 +58,8 @@ public class  Point{
         return location;
     }
 
-    public void setLocation(org.locationtech.jts.geom.Point location) {
-        this.location = location;
+    public void setLocation(Double longitude, Double latitude) {
+
     }
 
     public Integer getIcon() {
